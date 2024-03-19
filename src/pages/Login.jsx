@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import api from "../config/axios";
 import { login } from "../redux/Reducers/UserReducer";
 import { useForm } from "antd/es/form/Form";
+import { TOKEN } from "../redux/token";
 
 const Login = () => {
   const [isActive, setIsActive] = useState(false);
@@ -17,11 +18,10 @@ const Login = () => {
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData.entries());
     try {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1NyIsIkhldEhhblN0cmluZyI6IjI5LzA2LzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcxOTYxOTIwMDAwMCIsIm5iZiI6MTY4ODkyMjAwMCwiZXhwIjoxNzE5NzY2ODAwfQ.9MKEqdjyd8nN84l6J6hg-XfkLpmaY_aBPozV_TXxusM";
+      
       const response = await api.post("QuanLyNguoiDung/DangNhap", values, {
         headers: {
-          TokenCybersoft: token,
+          TokenCybersoft: TOKEN,
         },
       });
       localStorage.setItem("AccessToken", response.data.accessToken);
@@ -42,12 +42,10 @@ const Login = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData.entries());
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1NyIsIkhldEhhblN0cmluZyI6IjI5LzA2LzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcxOTYxOTIwMDAwMCIsIm5iZiI6MTY4ODkyMjAwMCwiZXhwIjoxNzE5NzY2ODAwfQ.9MKEqdjyd8nN84l6J6hg-XfkLpmaY_aBPozV_TXxusM";
 
     const res = await api.post("QuanLyNguoiDung/DangKy", values, {
       headers: {
-        TokenCybersoft: token,
+        TokenCybersoft: TOKEN,
       },
     });
 
