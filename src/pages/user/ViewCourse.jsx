@@ -20,9 +20,9 @@ const ViewCourse = () => {
       const res = await axios.get(
         "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc",
         {
-          // params: {
-          //   MaNhom: "GPO1",
-          // },
+          params: {
+            MaNhom: "GP02",
+          },
           headers: {
             TokenCybersoft: token,
           },

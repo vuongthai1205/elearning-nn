@@ -50,7 +50,7 @@ const Header = () => {
               <Link to="/journal">Journal</Link>
             </li>
             <li>
-              {userInfo.taiKhoan != null ? <>{userInfo.taiKhoan} <button className="btn-logout" onClick={onLogout}>Logout</button></>  : <Link to="/login">Account</Link>}
+              {userInfo.taiKhoan != null ? <><Link to="/my-profile">{userInfo.taiKhoan}</Link>  <button className="btn-logout" onClick={onLogout}>Logout</button></>  : <Link to="/login">Account</Link>}
               
             </li>
           </ul>
