@@ -1,10 +1,10 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { TOKEN } from '../../redux/token';
 import api from '../../config/axios';
 import { toast } from 'react-toastify';
 
-const SideBar = ({ courseDetail }) => {
+const SideBar = ({ courseDetail, relatedCourses }) => {
     async function handleEnroll() {
         try {
             const res = await api.post(
@@ -27,7 +27,7 @@ const SideBar = ({ courseDetail }) => {
                 console.error('Lỗi:', res.status);
             }
         } catch (error) {
-            toast.error(error.response.data );
+            toast.error(error.response.data);
         }
     }
 
@@ -110,7 +110,15 @@ const SideBar = ({ courseDetail }) => {
                     <div className="sidebar_teacher">
                         <div className="teacher_title_container d-flex flex-row align-items-center justify-content-start">
                             <div className="teacher_image">
-                                <img src="images/teacher.jpg" alt="" />
+                                <img
+                                    src="images/teacher.jpg"
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; // prevents looping
+                                        currentTarget.src =
+                                            'https://i.pinimg.com/236x/cd/cb/0c/cdcb0cb30bc700c53f12eff840156b29.jpg';
+                                    }}
+                                    alt=""
+                                />
                             </div>
                             <div className="teacher_title">
                                 <div className="teacher_name fw-bolder " style={{ textTransform: 'uppercase' }}>
@@ -157,52 +165,35 @@ const SideBar = ({ courseDetail }) => {
 
                 {/* <!-- Latest Course --> */}
                 <div className="sidebar_section shadow p-3 mb-5 bg-body-gray rounded mt-4 p-4">
-                    <div className="sidebar_section_title fw-bolder fs-3 text-bg-dark p-3 rounded">Latest Courses</div>
+                    <div className="sidebar_section_title fw-bolder fs-3 text-bg-dark p-3 rounded">Related Courses</div>
                     <div className="sidebar_latest">
-                        {/* <!-- Latest Course --> */}
-                        <div className="latest d-flex flex-row align-items-start justify-content-start">
-                            <div className="latest_image">
-                                <div>
-                                    <img src="images/latest_1.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div className="latest_content">
-                                <div className="latest_title">
-                                    <a href="course.html">How to Design a Logo a Beginners Course</a>
-                                </div>
-                                <div className="latest_price">Free</div>
-                            </div>
-                        </div>
-
-                        {/* <!-- Latest Course --> */}
-                        <div className="latest d-flex flex-row align-items-start justify-content-start">
-                            <div className="latest_image">
-                                <div>
-                                    <img src="images/latest_2.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div className="latest_content">
-                                <div className="latest_title">
-                                    <a href="course.html">Photography for Beginners MasterclassName</a>
-                                </div>
-                                <div className="latest_price">$170</div>
-                            </div>
-                        </div>
-
-                        {/* <!-- Latest Course --> */}
-                        <div className="latest d-flex flex-row align-items-start justify-content-start">
-                            <div className="latest_image">
-                                <div>
-                                    <img src="images/latest_3.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div className="latest_content">
-                                <div className="latest_title">
-                                    <a href="course.html">The Secrets of Body Language</a>
-                                </div>
-                                <div className="latest_price">$220</div>
-                            </div>
-                        </div>
+                        {relatedCourses.slice(1, 5).map((e, i) => {
+                            return (
+                                <>
+                                    <div className="latest d-flex flex-row align-items-start justify-content-start">
+                                        <div className="latest_image">
+                                            <div>
+                                                <img
+                                                    src={e.hinhAnh}
+                                                    alt=""
+                                                    onError={({ currentTarget }) => {
+                                                        currentTarget.onerror = null; // prevents looping
+                                                        currentTarget.src =
+                                                            'https://www.petbehaviourcompany.co.uk/images/default-course-thumbnail.png';
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="latest_content">
+                                            <div className="latest_title">
+                                                <Link to={`/course/${e.maKhoaHoc}`}>{e.tenKhoaHoc}</Link>
+                                            </div>
+                                            <div className="latest_price">Free</div>
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

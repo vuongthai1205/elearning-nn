@@ -22,6 +22,7 @@ body {
 }
 .flexSB {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .icon {
@@ -905,5 +906,17 @@ section#formHolder {
 header li .btn-logout{	
 	padding: 8px;
 	margin: unset;
+	font-weight: 500;
+}
 
+.content.flex .left {
+    width: 20%;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 9999px;
 }
